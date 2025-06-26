@@ -1,0 +1,9 @@
+{
+  "name": "elctron-tsup-vite",
+  "version": "1.0.0",
+  "main": "main/dist/main.js",
+  "author": "sunshower1127@gmail.com",
+  "license": "MIT",
+  "description": "",
+  "scripts": {}
+}
