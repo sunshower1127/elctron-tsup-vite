@@ -1,9 +1,40 @@
 {
-  "name": "elctron-tsup-vite",
+  "name": "electron-tsup-vite",
   "version": "1.0.0",
-  "main": "main/dist/main.js",
   "author": "sunshower1127@gmail.com",
   "license": "MIT",
-  "description": "",
-  "scripts": {}
+  "description": "Electron app built with tsup and vite",
+  "main": "main/dist/main.js",
+  "workspaces": [
+    "main",
+    "renderer"
+  ],
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development concurrently \"npm run dev -w renderer\" \"npm run dev -w main\" \"wait-on tcp:5173 && nodemon --watch main/dist --exec 'electron .'\"",
+    "build": "npm run build -w renderer && npm run build -w main",
+    "build:main": "npm run build -w main",
+    "build:renderer": "npm run build -w renderer",
+    "prepackage": "npm run build",
+    "package": "electron-builder",
+    "package:dir": "electron-builder --dir",
+    "package:mac": "electron-builder --mac",
+    "package:win": "electron-builder --win",
+    "_postinstall": "electron-builder install-app-deps"
+  },
+  "build": {
+    "appId": "com.stepup.electron-tsup-vite",
+    "files": [
+      "main/dist/**/*",
+      "renderer/dist/**/*"
+    ],
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0",
+    "cross-env": "^7.0.3",
+    "electron": "^37.1.0",
+    "electron-builder": "^26.0.12",
+    "nodemon": "^3.1.10",
+    "tsup": "^8.5.0",
+    "wait-on": "^8.0.3"
+  }
 }
