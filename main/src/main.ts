@@ -1,11 +1,15 @@
 import { app, BrowserWindow } from "electron";
 import path from "node:path";
+import { setupPingHandler } from "./ipc/ping";
 
 function createWindow() {
   // 브라우저 윈도우를 생성합니다.
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    webPreferences: {
+      preload: path.join(__dirname, "preload.js"),
+    },
   });
 
   // 개발 모드에서는 Vite 개발 서버의 URL 로드
@@ -20,6 +24,7 @@ function createWindow() {
 // 이 메서드가 호출됩니다. 일부 API는 이 이벤트가 발생한 후에만 사용할 수 있습니다.
 app.whenReady().then(() => {
   // IPC 핸들러 설정
+  setupPingHandler();
 
   createWindow();
 
